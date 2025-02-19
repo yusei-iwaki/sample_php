@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -11,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        $posts = Post::orderBy('created_at', 'DESC')->get();
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -27,38 +30,48 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $path = Storage::disk('public')->putFile('posts', $request->file('image'));
+        $post = new Post;
+        $post->user_id = $request->user()->id;
+        $post->image_path = Storage::url($path);
+        $post->caption = $request->caption;
+        $post->save();
+        return redirect(route('dashboard'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        return view('posts.show');
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        return view('posts.edit');
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $post->caption = $request->caption;
+        $post->save();
+
+        return redirect(route('dashboard'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect(route('dashboard'));
     }
 }

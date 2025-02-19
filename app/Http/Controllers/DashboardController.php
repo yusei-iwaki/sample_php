@@ -8,6 +8,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        return view('dashboard');
+        $posts = $request->user()->posts()->orderBy('created_at', 'DESC')->get();
+        return view('dashboard', ['user' => auth()->user(), 'posts' => $posts]);
     }
 }

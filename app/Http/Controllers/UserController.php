@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     public function index()
     {
-
-        return view('users.index');
+        $users = User::orderBy('created_at', 'DESC')->get();
+        return view('users.index', ['users' => $users]);
     }
 
-    public function show()
+    public function show(User $user)
     {
-        return view('users.show');
+        $posts = $user->posts()->orderBy('created_at', 'DESC')->get();
+        return view('users.show', ['user' => $user, 'posts' => $posts]);
     }
 }
