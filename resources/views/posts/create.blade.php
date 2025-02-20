@@ -5,7 +5,8 @@
         </h2>
     </x-slot>
     <div class="max-w-5xl mx-auto">
-        <form class="bg-white p-4 mt-8">
+        <form class="bg-white p-4 mt-8" enctype="multipart/form-data" action="/posts" method="POST">
+            @csrf
             <x-input-label value="画像" class="mb-2" />
             <input type="file"
                 class="w-full text-gray-500 font-medium bg-gray-100 file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-800 file:text-white rounded" />
