@@ -10,8 +10,7 @@
             <x-input-label value="画像" class="mb-2" />
             <x-file-input />
             <x-input-label value="キャプション" class="mt-4 mb-2" />
-            <textarea rows="8" placeholder="キャプションを入力してください..."
-                class="p-2.5 w-full rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <x-textarea rows="8" placeholder="キャプションを入力してください..." />
             <x-primary-button type="submit" class="mt-4">公開</x-primary-button>
         </form>
     </div>
