@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePostRequest extends FormRequest
+class DestroyPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdatePostRequest extends FormRequest
     public function authorize(): bool
     {
         $post = Post::find($this->route('post'))->first();
-        return $this->user()->can('update', $post);
+        return $this->user()->can('delete', $post);
     }
 
     /**
@@ -24,15 +24,7 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'caption' => ['required', 'string', 'max:255'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'caption.required' => 'キャプションは必須です。',
-            'caption.max' => 'キャプションは255文字以内で記入してください。',
+            //
         ];
     }
 }
