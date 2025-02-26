@@ -7,6 +7,15 @@
     <div class="max-w-5xl mx-auto">
         <form class="bg-white p-4 mt-8" enctype="multipart/form-data" action="/posts" method="POST">
             @csrf
+            @if ($errors->any())
+                <div class="my-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <x-input-label value="画像" class="mb-2" />
             <x-file-input />
             <x-input-label value="キャプション" class="mt-4 mb-2" />
