@@ -7,11 +7,19 @@
     <div class="max-w-5xl mx-auto">
         <form class="bg-white p-4 mt-8" enctype="multipart/form-data" action="/posts" method="POST">
             @csrf
+            @if ($errors->any())
+                <div class="my-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <x-input-label value="画像" class="mb-2" />
             <x-file-input />
             <x-input-label value="キャプション" class="mt-4 mb-2" />
-            <textarea rows="8" placeholder="キャプションを入力してください..."
-                class="p-2.5 w-full rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <x-textarea rows="8" placeholder="キャプションを入力してください..." />
             <x-primary-button type="submit" class="mt-4">公開</x-primary-button>
         </form>
     </div>

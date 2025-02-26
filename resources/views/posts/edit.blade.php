@@ -26,6 +26,15 @@
                 <form method="POST" action="/posts/{{$post->id}}">
                     @csrf
                     @method('PUT')
+                    @if ($errors->any())
+                        <div class="my-4">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-red-500">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h3 class="font-semibold mt-2">キャプション</h3>
                     <x-textarea name="caption" rows="8" class="mt-2">{{ $post->caption }}</x-textarea>
                     <div class="flex items-center mt-4">
